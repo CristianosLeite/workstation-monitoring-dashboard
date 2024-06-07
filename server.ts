@@ -1,9 +1,16 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
-import express from 'express';
+import express, { json, urlencoded } from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import { Database } from './src/app/models/data/database';
+import { CompanyController } from './src/app/controllers/company.controller';
+import { CompanyService } from './src/app/services/company.service';
+import { WorkstationController } from './src/app/controllers/workstation.controller';
+import { WorkstationService } from './src/app/services/workstation.service';
+import { NotificationController } from './src/app/controllers/notification.controller';
+import { NotificationService } from './src/app/services/notification.service';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -17,12 +24,35 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  // Initialize database connection
+  const db = new Database();
+  db.initialize();
+
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
   }));
+
+  // Enable parsing of application/json and application/x-www-form-urlencoded
+  server.use(json());
+  server.use(urlencoded({ extended: true }));
+
+  // API routes
+
+  // Companies
+  const companyService = new CompanyService(db);
+  const companyController = new CompanyController(companyService);
+  server.use('/api/companies', companyController.getRouter());
+
+  // Workstations
+  const workstationService = new WorkstationService(db);
+  const workstationController = new WorkstationController(workstationService);
+  server.use('/api/workstations', workstationController.getRouter());
+
+  // Notifications
+  const notificationService = new NotificationService(db);
+  const notificationController = new NotificationController(notificationService);
+  server.use('/api/notifications', notificationController.getRouter());
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
