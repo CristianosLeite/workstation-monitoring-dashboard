@@ -1,6 +1,7 @@
 export class Company {
   id: string;
   name: string;
+  description: string;
   companyCode: number;
   createdAt: Date;
   updatedAt: Date;
@@ -9,6 +10,7 @@ export class Company {
   constructor() {
     this.id = '';
     this.name = '';
+    this.description = '';
     this.companyCode = 0;
     this.createdAt = new Date();
     this.updatedAt = new Date();
@@ -19,6 +21,7 @@ export class Company {
     const company = new Company();
     company.id = json.id;
     company.name = json.name;
+    company.description = json.description;
     company.companyCode = json.companyCode;
     company.createdAt = json.createdAt;
     company.updatedAt = json.updatedAt;
