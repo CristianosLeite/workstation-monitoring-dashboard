@@ -5,7 +5,6 @@ export class Notification {
   isAcknowledged: boolean;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
 
   constructor() {
     this.id = '';
@@ -14,7 +13,6 @@ export class Notification {
     this.isAcknowledged = false;
     this.createdAt = new Date();
     this.updatedAt = new Date();
-    this.deletedAt = new Date();
   }
 
   public static fromJson(json: Notification): Notification {
@@ -25,7 +23,6 @@ export class Notification {
     notification.isAcknowledged = json.isAcknowledged;
     notification.createdAt = json.createdAt;
     notification.updatedAt = json.updatedAt;
-    notification.deletedAt = json.deletedAt;
     return notification;
   }
 }

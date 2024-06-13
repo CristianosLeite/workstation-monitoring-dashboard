@@ -4,7 +4,6 @@ export class Workstation {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
 
   constructor() {
     this.id = '';
@@ -12,7 +11,6 @@ export class Workstation {
     this.name = '';
     this.createdAt = new Date();
     this.updatedAt = new Date();
-    this.deletedAt = new Date();
   }
 
   public static fromJson(json: Workstation): Workstation {
@@ -22,7 +20,6 @@ export class Workstation {
     workstation.name = json.name;
     workstation.createdAt = json.createdAt;
     workstation.updatedAt = json.updatedAt;
-    workstation.deletedAt = json.deletedAt;
     return workstation;
   }
 }

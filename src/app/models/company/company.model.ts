@@ -5,7 +5,6 @@ export class Company {
   companyCode: number;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
 
   constructor() {
     this.id = '';
@@ -14,7 +13,6 @@ export class Company {
     this.companyCode = 0;
     this.createdAt = new Date();
     this.updatedAt = new Date();
-    this.deletedAt = new Date();
   }
 
   public static fromJson(json: Company): Company {
@@ -25,7 +23,6 @@ export class Company {
     company.companyCode = json.companyCode;
     company.createdAt = json.createdAt;
     company.updatedAt = json.updatedAt;
-    company.deletedAt = json.deletedAt;
     return company;
   }
 }
