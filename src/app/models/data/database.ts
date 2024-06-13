@@ -103,7 +103,7 @@ export class Database {
     this.client.query(`
       CREATE TABLE IF NOT EXISTS notifications (
         id SERIAL PRIMARY KEY,
-        workstation_id INT NOT NULL,
+        workstation_id TEXT NOT NULL,
         message TEXT NOT NULL,
         isAcknowledged BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
