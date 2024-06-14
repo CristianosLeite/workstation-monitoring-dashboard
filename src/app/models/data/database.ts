@@ -76,17 +76,17 @@ export class Database {
       .catch((err) => console.error('Error creating table', err));
   }
 
-  async setWorkstation(companyId: number, name: string): Promise<Workstation> {
-    let workstation = new Workstation();
-    await this.client.query(`
-      INSERT INTO workstations (company_id, name)
-      VALUES (${companyId}, '${name}') RETURNING *;
-    `)
-      .then((res) => {
-        workstation = res.rows[0];
-      })
-      .catch((err) => console.error('Error creating workstation', err));
-    return workstation;
+  async createWorkstation(companyId: number, name: string): Promise<Workstation> {
+    let newWorkstation = new Workstation();
+    const text = 'INSERT INTO workstations(company_id, name, description, created_at, updated_at) VALUES($1, $2, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *';
+    const values = [companyId, name];
+    try {
+      const res = await this.client.query(text, values);
+      newWorkstation = res.rows[0];
+    } catch (err) {
+      console.error('Error creating workstation', err);
+    }
+    return newWorkstation;
   }
 
   async getWorkstations(): Promise<any> {
@@ -104,7 +104,7 @@ export class Database {
       CREATE TABLE IF NOT EXISTS notifications (
         id SERIAL PRIMARY KEY,
         workstation_id TEXT NOT NULL,
-        message TEXT NOT NULL,
+        content TEXT NOT NULL,
         isAcknowledged BOOLEAN DEFAULT FALSE,
         responsible TEXT,
         action TEXT,
@@ -115,17 +115,17 @@ export class Database {
       .catch((err) => console.error('Error creating table', err));
   }
 
-  async setNotification(workstationId: number, message: string): Promise<Notification> {
-    let notification = new Notification();
-    await this.client.query(`
-      INSERT INTO notifications (workstation_id, message)
-      VALUES (${workstationId}, '${message}') RETURNING *;
-    `)
-      .then((res) => {
-        notification = res.rows[0];
-      })
-      .catch((err) => console.error('Error creating notification', err));
-    return notification;
+  async createNotification(workstationId: string, content: string): Promise<Notification> {
+    let newNotification = new Notification();
+    const text = 'INSERT INTO notifications(workstation_id, content, isAcknowledged, created_at, updated_at, responsible, action) VALUES($1, $2, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, NULL) RETURNING *';
+    const values = [workstationId, content];
+    try {
+      const res = await this.client.query(text, values);
+      newNotification = res.rows[0];
+    } catch (err) {
+      console.error('Error creating notification', err);
+    }
+    return newNotification;
   }
 
   async getNotifications(): Promise<Notification[]> {
@@ -142,9 +142,9 @@ export class Database {
     let notification = new Notification();
     await this.client.query(`
       UPDATE notifications
-      SET isAcknowledged = ${isAcknowledged}, updated_at = CURRENT_TIMESTAMP, responsible = '${responsible}', action = '${action}'
-      WHERE id = ${id} RETURNING *;
-    `)
+      SET isAcknowledged = $1, updated_at = CURRENT_TIMESTAMP, responsible = $2, action = $3
+      WHERE id = $4 RETURNING *;
+    `, [isAcknowledged, responsible, action, id])
       .then((res) => {
         notification = res.rows[0];
       })

@@ -1,7 +1,7 @@
 export class Notification {
   id: string;
   workstationId: string;
-  message: string;
+  content: string;
   isAcknowledged: boolean;
   responsible: string;
   action: string;
@@ -11,7 +11,7 @@ export class Notification {
   constructor() {
     this.id = '';
     this.workstationId = '';
-    this.message = '';
+    this.content = '';
     this.isAcknowledged = false;
     this.responsible = '';
     this.action = '';
@@ -23,7 +23,7 @@ export class Notification {
     const notification = new Notification();
     notification.id = json.id;
     notification.workstationId = json.workstationId;
-    notification.message = json.message;
+    notification.content = json.content;
     notification.isAcknowledged = json.isAcknowledged;
     notification.responsible = json.responsible;
     notification.action = json.action;

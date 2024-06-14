@@ -47,14 +47,19 @@ export class NotificationController {
       return;
     }
 
-    const { workstationId, message } = req.body;
+    const { workstationId, content } = req.body;
 
-    if (!workstationId || !message) {
+    if (!workstationId || !content) {
       res.status(400).send('Required fields are missing');
       return;
     }
 
-    const notification = await this.notificationService.createNotification(workstationId, message);
+    const notification = await this.notificationService.createNotification(workstationId, content);
+    if (!notification.id) {
+      res.status(500).send('Error creating notification');
+      return;
+    }
+    this.notificationService.sendNotification(notification);
     res.status(201).send(notification);
   }
 }

@@ -14,6 +14,6 @@ export class WorkstationService {
   }
 
   public async createWorkstation(companyId: number, name: string): Promise<Workstation> {
-    return await this.db.setWorkstation(companyId, name);
+    return await this.db.createWorkstation(companyId, name);
   }
 }
