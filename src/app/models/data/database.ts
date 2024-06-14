@@ -106,6 +106,8 @@ export class Database {
         workstation_id TEXT NOT NULL,
         message TEXT NOT NULL,
         isAcknowledged BOOLEAN DEFAULT FALSE,
+        responsible TEXT,
+        action TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -134,6 +136,20 @@ export class Database {
       console.error('Error getting notifications', err);
       return [];
     }
+  }
+
+  async updateNotification(id: number, isAcknowledged: boolean, responsible: string, action: string): Promise<Notification> {
+    let notification = new Notification();
+    await this.client.query(`
+      UPDATE notifications
+      SET isAcknowledged = ${isAcknowledged}, updated_at = CURRENT_TIMESTAMP, responsible = '${responsible}', action = '${action}'
+      WHERE id = ${id} RETURNING *;
+    `)
+      .then((res) => {
+        notification = res.rows[0];
+      })
+      .catch((err) => console.error('Error updating notification', err));
+    return notification;
   }
 
   public close(): void {

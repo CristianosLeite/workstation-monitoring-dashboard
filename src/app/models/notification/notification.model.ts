@@ -3,6 +3,8 @@ export class Notification {
   workstationId: string;
   message: string;
   isAcknowledged: boolean;
+  responsible: string;
+  action: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -11,6 +13,8 @@ export class Notification {
     this.workstationId = '';
     this.message = '';
     this.isAcknowledged = false;
+    this.responsible = '';
+    this.action = '';
     this.createdAt = new Date();
     this.updatedAt = new Date();
   }
@@ -21,6 +25,8 @@ export class Notification {
     notification.workstationId = json.workstationId;
     notification.message = json.message;
     notification.isAcknowledged = json.isAcknowledged;
+    notification.responsible = json.responsible;
+    notification.action = json.action;
     notification.createdAt = json.createdAt;
     notification.updatedAt = json.updatedAt;
     return notification;

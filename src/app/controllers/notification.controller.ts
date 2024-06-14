@@ -8,10 +8,28 @@ export class NotificationController {
     this.router = express.Router();
     this.router.get('/', this.getNotifications.bind(this));
     this.router.post('/create', this.createNotification.bind(this));
+    this.router.patch('/update', this.updateNotification.bind(this));
   }
 
   public getRouter(): Router {
     return this.router;
+  }
+
+  private async updateNotification(req: express.Request, res: express.Response): Promise<void> {
+    if (!req.body) {
+      res.status(400).send('Request body is missing');
+      return;
+    }
+
+    const { id, isAcknowledged, responsible, action } = req.body;
+
+    if (!id || isAcknowledged === undefined) {
+      res.status(400).send('Required fields are missing');
+      return;
+    }
+
+    const notification = await this.notificationService.updateNotification(id, isAcknowledged, responsible, action);
+    res.send(notification);
   }
 
   private async getNotifications(req: express.Request, res: express.Response): Promise<void> {

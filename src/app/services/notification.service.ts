@@ -9,6 +9,10 @@ export class NotificationService {
 
   constructor(private db: Database) { }
 
+  public async updateNotification(id: number, isAcknowledged: boolean, responsible: string, action: string): Promise<Notification> {
+    return await this.db.updateNotification(id, isAcknowledged, responsible, action);
+  }
+
   public async getNotifications(): Promise<Notification[]> {
     return await this.db.getNotifications();
   }
