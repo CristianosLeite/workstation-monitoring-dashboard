@@ -14,10 +14,12 @@ import { NotificationService } from './src/app/services/notification.service';
 import http, { Server as HttpServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import WebSocket from 'ws';
+import cors from 'cors';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): { app: express.Express, io: SocketIOServer, wss: WebSocket.Server } {
   const server = express();
+  server.use(cors());
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
