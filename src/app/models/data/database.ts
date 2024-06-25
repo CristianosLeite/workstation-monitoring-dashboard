@@ -2,15 +2,13 @@ import { Client } from 'pg';
 import { Company } from '../company/company.model';
 import { Workstation } from '../workstation/workstation.model';
 import { Notification } from '../notification/notification.model';
-import dotenv from 'dotenv';
 
 export class Database {
   private client: Client;
 
-  constructor() {
-    dotenv.config();
+  constructor(conectionString: string) {
     this.client = new Client({
-      connectionString: process.env['DATABASE_URL'],
+      connectionString: conectionString,
     });
 
     this.createCompanyTable();

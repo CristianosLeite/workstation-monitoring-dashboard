@@ -15,6 +15,7 @@ import http, { Server as HttpServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import WebSocket from 'ws';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): { app: express.Express, io: SocketIOServer, wss: WebSocket.Server } {
@@ -30,7 +31,9 @@ export function app(): { app: express.Express, io: SocketIOServer, wss: WebSocke
   server.set('views', browserDistFolder);
 
   // Initialize database connection
-  const db = new Database();
+  dotenv.config();
+  const conectionString = String(process.env['DATABASE_URL']);
+  const db = new Database(conectionString);
   db.initialize();
 
   // Serve static files from /browser

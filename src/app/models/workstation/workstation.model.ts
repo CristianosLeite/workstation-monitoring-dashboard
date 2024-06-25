@@ -1,25 +1,25 @@
 export class Workstation {
   id: string;
-  companyId: string;
+  company_id: string;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
 
   constructor() {
     this.id = '';
-    this.companyId = '';
+    this.company_id = '';
     this.name = '';
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
+    this.created_at = new Date();
+    this.updated_at = new Date();
   }
 
   public static fromJson(json: Workstation): Workstation {
     const workstation = new Workstation();
     workstation.id = json.id;
-    workstation.companyId = json.companyId;
+    workstation.company_id = json.company_id;
     workstation.name = json.name;
-    workstation.createdAt = json.createdAt;
-    workstation.updatedAt = json.updatedAt;
+    workstation.created_at = json.created_at;
+    workstation.updated_at = json.updated_at;
     return workstation;
   }
 }

@@ -1,0 +1,10 @@
+<div class="container">
+  <h2>Criar workstation</h2>
+  <form (ngSubmit)="submitForm()">
+    <label for="companyId">ID da Empresa:</label>
+    <input type="number" id="company_id" name="company_id" [(ngModel)]="workstation.company_id" required />
+    <label for="workStationName">Nome da Estação:</label>
+    <input type="text" id="workStationName" name="workStationName" [(ngModel)]="workstation.name" required/>
+    <button type="submit">Enviar</button>
+  </form>
+</div>

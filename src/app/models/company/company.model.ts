@@ -2,17 +2,17 @@ export class Company {
   id: string;
   name: string;
   description: string;
-  companyCode: number;
-  createdAt: Date;
-  updatedAt: Date;
+  company_code: number;
+  created_at: Date;
+  updated_at: Date;
 
   constructor() {
     this.id = '';
     this.name = '';
     this.description = '';
-    this.companyCode = 0;
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
+    this.company_code = 0;
+    this.created_at = new Date();
+    this.updated_at = new Date();
   }
 
   public static fromJson(json: Company): Company {
@@ -20,9 +20,9 @@ export class Company {
     company.id = json.id;
     company.name = json.name;
     company.description = json.description;
-    company.companyCode = json.companyCode;
-    company.createdAt = json.createdAt;
-    company.updatedAt = json.updatedAt;
+    company.company_code = json.company_code;
+    company.created_at = json.created_at;
+    company.updated_at = json.updated_at;
     return company;
   }
 }

@@ -1,34 +1,34 @@
 export class Notification {
   id: string;
-  workstationId: string;
+  workstation_id: string;
   content: string;
-  isAcknowledged: boolean;
+  is_acknowledged: boolean;
   responsible: string;
   action: string;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
 
   constructor() {
     this.id = '';
-    this.workstationId = '';
+    this.workstation_id = '';
     this.content = '';
-    this.isAcknowledged = false;
+    this.is_acknowledged = false;
     this.responsible = '';
     this.action = '';
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
+    this.created_at = new Date();
+    this.updated_at = new Date();
   }
 
   public static fromJson(json: Notification): Notification {
     const notification = new Notification();
     notification.id = json.id;
-    notification.workstationId = json.workstationId;
+    notification.workstation_id = json.workstation_id;
     notification.content = json.content;
-    notification.isAcknowledged = json.isAcknowledged;
+    notification.is_acknowledged = json.is_acknowledged;
     notification.responsible = json.responsible;
     notification.action = json.action;
-    notification.createdAt = json.createdAt;
-    notification.updatedAt = json.updatedAt;
+    notification.created_at = json.created_at;
+    notification.updated_at = json.updated_at;
     return notification;
   }
 }
